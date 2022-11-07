@@ -15,4 +15,8 @@
     <ProjectReference Include="..\FileHandlingLibrary\FileHandlingLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="www\Files\" />
+  </ItemGroup>
+
 </Project>
