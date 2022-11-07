@@ -23,11 +23,6 @@ namespace FileHandlingLibrary
             }
         }
 
-        public bool DownloadFile(string fileName)
-        {
-            return false;
-        }
-
         public IEnumerable<string> GetAllFilesNames(string path)
         {
             List<string> fileNames = new();
@@ -38,14 +33,43 @@ namespace FileHandlingLibrary
             return fileNames;
         }
 
-        public bool GetFileByName(string fileName)
+        public string GetFileByName(string fileName, string path)
+        {
+            if(fileName != null)
+            {
+                List<string> fileNames = new();
+                Directory.GetFiles(path, "*", SearchOption.AllDirectories)
+                    .ToList()
+                    .ForEach(f => fileNames.Add(Path.GetFileName(f)));
+
+                if(fileNames.Count == 0) { return "Files Directory is empty"; }
+                else
+                {
+                    foreach(var file in fileNames)
+                    {
+                        if (file == fileName) 
+                        { 
+                            return file; 
+                        }
+                    }
+                    return "File Not Found";
+                }
+            }
+            else
+            {
+                return "File Not Found";
+            }
+        }
+
+        public string GetFileByDate(DateTime date)
+        {
+            return "File Not Found";
+        }
+
+        public bool DownloadFile(string fileName)
         {
             return false;
         }
 
-        public bool GetFileByDate(DateTime date)
-        {
-            return false;
-        }
     }
 }
