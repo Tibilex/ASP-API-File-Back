@@ -28,9 +28,14 @@ namespace FileHandlingLibrary
             return false;
         }
 
-        public bool GetAllFilesNames()
+        public IEnumerable<string> GetAllFilesNames(string path)
         {
-            return false;
+            List<string> fileNames = new();
+            Directory.GetFiles(path, "*", SearchOption.AllDirectories)
+                .ToList()
+                .ForEach(f => fileNames.Add(Path.GetFileName(f)));
+
+            return fileNames;
         }
 
         public bool GetFileByName(string fileName)

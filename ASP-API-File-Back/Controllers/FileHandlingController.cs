@@ -25,19 +25,10 @@ namespace ASP_API_File_Back.Controllers
             {
                 return Ok();
             }
-           
-            /*
-            if (file.Length > 0)
-            {
-                var filePath = $".//Files//{Path.GetRandomFileName()}.{new FileInfo(file.FileName).Extension}";
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    await file.CopyToAsync(stream);
-                }
-            }
-            return Ok();
-            */
         }
+
+        [HttpGet("GetAllFiles")]
+        public IEnumerable<string> GetAllFileNames() => m_fileRepo.FileWork.GetAllFilesNames(m_fileRepo.directoryPath);
+        
     }
 }
