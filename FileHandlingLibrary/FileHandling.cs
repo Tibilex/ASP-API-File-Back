@@ -57,8 +57,18 @@ namespace FileHandlingLibrary
             }
         }
 
-        public string GetFileByDate(DateTime date, string fileName)
+        public string GetFileByDate(DateTime date, string path)
         {
+            var directory = new DirectoryInfo(path);
+            FileInfo[] files = directory.GetFiles();
+
+            foreach(var file in files)
+            {
+                if (file.CreationTime.Date == date)
+                {
+                    return file.Name;
+                }
+            }
             return "File Not Found";
         }
 
