@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace FileHandlingLibrary
 {
@@ -25,12 +26,7 @@ namespace FileHandlingLibrary
 
         public IEnumerable<string> GetAllFilesNames(string path)
         {
-            List<string> fileNames = new();
-            Directory.GetFiles(path, "*", SearchOption.AllDirectories)
-                .ToList()
-                .ForEach(f => fileNames.Add(Path.GetFileName(f)));
-
-            return fileNames;
+            return new DirectoryInfo(path).GetFiles().Select(x => x.Name);
         }
 
         public string GetFileByName(string fileName, string path)
@@ -40,7 +36,7 @@ namespace FileHandlingLibrary
                 List<string> fileNames = new();
                 Directory.GetFiles(path, "*", SearchOption.AllDirectories)
                     .ToList()
-                    .ForEach(f => fileNames.Add(Path.GetFileName(f)));
+                    .ForEach(x => fileNames.Add(Path.GetFileName(x)));
 
                 if(fileNames.Count == 0) { return "Files Directory is empty"; }
                 else
@@ -61,14 +57,25 @@ namespace FileHandlingLibrary
             }
         }
 
-        public string GetFileByDate(DateTime date)
+        public string GetFileByDate(DateTime date, string fileName)
         {
             return "File Not Found";
         }
 
-        public bool DownloadFile(string fileName)
+        public byte[] DownloadFile(string fileName, string path)
         {
-            return false;
+            if(fileName.Length > 0)
+            {
+                if (File.Exists(path + fileName))
+                {
+                    return File.ReadAllBytes(path + fileName);
+                }
+                else 
+                {
+                    return null;
+                }        
+            }
+            return null;
         }
 
     }

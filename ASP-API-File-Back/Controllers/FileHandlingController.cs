@@ -32,5 +32,12 @@ namespace ASP_API_File_Back.Controllers
 
         [HttpGet("GetFileByName")]
         public string GetAllFileNames(string fileName) => m_fileRepo.FileWork.GetFileByName(fileName, m_fileRepo.directoryPath);
+
+        [HttpGet("GetFile")]
+        public object DownloadFile(string fileName)
+        {
+            return m_fileRepo.FileWork.DownloadFile(fileName, m_fileRepo.directoryPath);
+        }
+        
     }
 }
