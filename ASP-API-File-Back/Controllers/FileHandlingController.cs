@@ -36,12 +36,15 @@ namespace ASP_API_File_Back.Controllers
         [HttpGet("GetFileByDate")]
         public string GetFileByDate(DateTime date) => m_fileRepo.FileWork.GetFileByDate(date, m_fileRepo.directoryPath);
 
-        [HttpGet("GetFile")]
-        public object DownloadFile(string fileName)
+        [HttpGet("DownloadFile")]
+        public IActionResult GetBlobDownload([FromQuery] string name)
         {
-            return m_fileRepo.FileWork.DownloadFile(fileName, m_fileRepo.directoryPath);
+            var net = new System.Net.WebClient();
+            var data = net.DownloadData(m_fileRepo.directoryPath + name);
+            var content = new System.IO.MemoryStream(data);
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = "something.bin";
+            return File(content, contentType, fileName);
         }
-
-
     }
 }

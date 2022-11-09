@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.IO;
+using System.Web.Mvc;
 
 namespace FileHandlingLibrary
 {
@@ -71,22 +71,5 @@ namespace FileHandlingLibrary
             }
             return "File Not Found";
         }
-
-        public byte[] DownloadFile(string fileName, string path)
-        {
-            if(fileName.Length > 0)
-            {
-                if (File.Exists(path + fileName))
-                {
-                    return File.ReadAllBytes(path + fileName);
-                }
-                else 
-                {
-                    return null;
-                }        
-            }
-            return null;
-        }
-
     }
 }
